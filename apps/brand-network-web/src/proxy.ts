@@ -45,7 +45,7 @@ function extractSubdomain(hostname: string): string | null {
   return host;
 }
 
-export async function middleware(request: NextRequest): Promise<NextResponse> {
+export async function proxy(request: NextRequest): Promise<NextResponse> {
   const hostname = request.headers.get("host") ?? request.nextUrl.hostname;
   const subdomain = extractSubdomain(hostname);
   const { pathname } = request.nextUrl;
