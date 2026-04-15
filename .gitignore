@@ -32,3 +32,6 @@ drizzle/meta
 # WatermelonDB
 *.db
 *.db-journal
+
+# Claude Code
+.claude/
