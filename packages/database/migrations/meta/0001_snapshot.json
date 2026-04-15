@@ -1,0 +1,3601 @@
+{
+  "id": "4a6a9109-595a-471f-8127-d1245c8baa64",
+  "prevId": "22db39d3-50cb-4089-8f3a-453bc0f01ede",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.audit_logs": {
+      "name": "audit_logs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "actor_user_id": {
+          "name": "actor_user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "actor_role": {
+          "name": "actor_role",
+          "type": "user_role",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "action": {
+          "name": "action",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "resource_type": {
+          "name": "resource_type",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "resource_id": {
+          "name": "resource_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "previous_state": {
+          "name": "previous_state",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "next_state": {
+          "name": "next_state",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ip_address": {
+          "name": "ip_address",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_agent": {
+          "name": "user_agent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "audit_logs_tenant_id_idx": {
+          "name": "audit_logs_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "audit_logs_actor_user_id_idx": {
+          "name": "audit_logs_actor_user_id_idx",
+          "columns": [
+            {
+              "expression": "actor_user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "audit_logs_resource_idx": {
+          "name": "audit_logs_resource_idx",
+          "columns": [
+            {
+              "expression": "resource_type",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "resource_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "audit_logs_created_at_idx": {
+          "name": "audit_logs_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "audit_logs_tenant_id_tenants_id_fk": {
+          "name": "audit_logs_tenant_id_tenants_id_fk",
+          "tableFrom": "audit_logs",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.availability_inquiries": {
+      "name": "availability_inquiries",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "boutique_id": {
+          "name": "boutique_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(320)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone_number": {
+          "name": "phone_number",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "event_date": {
+          "name": "event_date",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "preferred_dress_style": {
+          "name": "preferred_dress_style",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "inquiry_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'new'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "availability_inquiries_boutique_id_idx": {
+          "name": "availability_inquiries_boutique_id_idx",
+          "columns": [
+            {
+              "expression": "boutique_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "availability_inquiries_status_idx": {
+          "name": "availability_inquiries_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "availability_inquiries_email_idx": {
+          "name": "availability_inquiries_email_idx",
+          "columns": [
+            {
+              "expression": "email",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "availability_inquiries_boutique_id_boutiques_id_fk": {
+          "name": "availability_inquiries_boutique_id_boutiques_id_fk",
+          "tableFrom": "availability_inquiries",
+          "tableTo": "boutiques",
+          "columnsFrom": [
+            "boutique_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.bookings": {
+      "name": "bookings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "customer_id": {
+          "name": "customer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "service_id": {
+          "name": "service_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "location_id": {
+          "name": "location_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "staff_user_id": {
+          "name": "staff_user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "booking_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "scheduled_at": {
+          "name": "scheduled_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ends_at": {
+          "name": "ends_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "confirmation_code": {
+          "name": "confirmation_code",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "bookings_tenant_id_idx": {
+          "name": "bookings_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "bookings_customer_id_idx": {
+          "name": "bookings_customer_id_idx",
+          "columns": [
+            {
+              "expression": "customer_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "bookings_scheduled_at_idx": {
+          "name": "bookings_scheduled_at_idx",
+          "columns": [
+            {
+              "expression": "scheduled_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "bookings_staff_user_id_idx": {
+          "name": "bookings_staff_user_id_idx",
+          "columns": [
+            {
+              "expression": "staff_user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "bookings_tenant_id_tenants_id_fk": {
+          "name": "bookings_tenant_id_tenants_id_fk",
+          "tableFrom": "bookings",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "bookings_customer_id_customers_id_fk": {
+          "name": "bookings_customer_id_customers_id_fk",
+          "tableFrom": "bookings",
+          "tableTo": "customers",
+          "columnsFrom": [
+            "customer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "bookings_service_id_services_id_fk": {
+          "name": "bookings_service_id_services_id_fk",
+          "tableFrom": "bookings",
+          "tableTo": "services",
+          "columnsFrom": [
+            "service_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "bookings_location_id_locations_id_fk": {
+          "name": "bookings_location_id_locations_id_fk",
+          "tableFrom": "bookings",
+          "tableTo": "locations",
+          "columnsFrom": [
+            "location_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.boutique_staff": {
+      "name": "boutique_staff",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "boutique_id": {
+          "name": "boutique_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "profile_id": {
+          "name": "profile_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "boutique_staff_role",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "boutique_staff_boutique_profile_idx": {
+          "name": "boutique_staff_boutique_profile_idx",
+          "columns": [
+            {
+              "expression": "boutique_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "profile_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "boutique_staff_boutique_id_idx": {
+          "name": "boutique_staff_boutique_id_idx",
+          "columns": [
+            {
+              "expression": "boutique_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "boutique_staff_profile_id_idx": {
+          "name": "boutique_staff_profile_id_idx",
+          "columns": [
+            {
+              "expression": "profile_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "boutique_staff_boutique_id_boutiques_id_fk": {
+          "name": "boutique_staff_boutique_id_boutiques_id_fk",
+          "tableFrom": "boutique_staff",
+          "tableTo": "boutiques",
+          "columnsFrom": [
+            "boutique_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "boutique_staff_profile_id_profiles_id_fk": {
+          "name": "boutique_staff_profile_id_profiles_id_fk",
+          "tableFrom": "boutique_staff",
+          "tableTo": "profiles",
+          "columnsFrom": [
+            "profile_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.boutiques": {
+      "name": "boutiques",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address_line1": {
+          "name": "address_line1",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "state": {
+          "name": "state",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "postal_code": {
+          "name": "postal_code",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(320)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "logo_url": {
+          "name": "logo_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "primary_color": {
+          "name": "primary_color",
+          "type": "varchar(7)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "boutiques_slug_idx": {
+          "name": "boutiques_slug_idx",
+          "columns": [
+            {
+              "expression": "slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "boutiques_tenant_id_idx": {
+          "name": "boutiques_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "boutiques_tenant_id_tenants_id_fk": {
+          "name": "boutiques_tenant_id_tenants_id_fk",
+          "tableFrom": "boutiques",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.categories": {
+      "name": "categories",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "categories_tenant_slug_idx": {
+          "name": "categories_tenant_slug_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "categories_tenant_id_idx": {
+          "name": "categories_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "categories_parent_id_idx": {
+          "name": "categories_parent_id_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "categories_tenant_id_tenants_id_fk": {
+          "name": "categories_tenant_id_tenants_id_fk",
+          "tableFrom": "categories",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.customers": {
+      "name": "customers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(320)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone_number": {
+          "name": "phone_number",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "marketing_opt_in": {
+          "name": "marketing_opt_in",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "loyalty_points": {
+          "name": "loyalty_points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "tags": {
+          "name": "tags",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'[]'::jsonb"
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "customers_tenant_email_idx": {
+          "name": "customers_tenant_email_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "email",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "customers_tenant_id_idx": {
+          "name": "customers_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "customers_user_id_idx": {
+          "name": "customers_user_id_idx",
+          "columns": [
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "customers_tenant_id_tenants_id_fk": {
+          "name": "customers_tenant_id_tenants_id_fk",
+          "tableFrom": "customers",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.dress_inventory": {
+      "name": "dress_inventory",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "boutique_id": {
+          "name": "boutique_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dress_id": {
+          "name": "dress_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "size": {
+          "name": "size",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "reserved_quantity": {
+          "name": "reserved_quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "dress_inventory_dress_size_idx": {
+          "name": "dress_inventory_dress_size_idx",
+          "columns": [
+            {
+              "expression": "dress_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "size",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "dress_inventory_boutique_id_idx": {
+          "name": "dress_inventory_boutique_id_idx",
+          "columns": [
+            {
+              "expression": "boutique_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "dress_inventory_dress_id_idx": {
+          "name": "dress_inventory_dress_id_idx",
+          "columns": [
+            {
+              "expression": "dress_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "dress_inventory_boutique_id_boutiques_id_fk": {
+          "name": "dress_inventory_boutique_id_boutiques_id_fk",
+          "tableFrom": "dress_inventory",
+          "tableTo": "boutiques",
+          "columnsFrom": [
+            "boutique_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "dress_inventory_dress_id_dresses_id_fk": {
+          "name": "dress_inventory_dress_id_dresses_id_fk",
+          "tableFrom": "dress_inventory",
+          "tableTo": "dresses",
+          "columnsFrom": [
+            "dress_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.dress_reservations": {
+      "name": "dress_reservations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "boutique_id": {
+          "name": "boutique_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dress_id": {
+          "name": "dress_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "inventory_id": {
+          "name": "inventory_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "customer_name": {
+          "name": "customer_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "customer_email": {
+          "name": "customer_email",
+          "type": "varchar(320)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "customer_phone": {
+          "name": "customer_phone",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "event_date": {
+          "name": "event_date",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "reservation_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "garment_analysis": {
+          "name": "garment_analysis",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "dress_reservations_boutique_id_idx": {
+          "name": "dress_reservations_boutique_id_idx",
+          "columns": [
+            {
+              "expression": "boutique_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "dress_reservations_customer_email_idx": {
+          "name": "dress_reservations_customer_email_idx",
+          "columns": [
+            {
+              "expression": "customer_email",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "dress_reservations_status_idx": {
+          "name": "dress_reservations_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "dress_reservations_dress_id_idx": {
+          "name": "dress_reservations_dress_id_idx",
+          "columns": [
+            {
+              "expression": "dress_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "dress_reservations_boutique_id_boutiques_id_fk": {
+          "name": "dress_reservations_boutique_id_boutiques_id_fk",
+          "tableFrom": "dress_reservations",
+          "tableTo": "boutiques",
+          "columnsFrom": [
+            "boutique_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "dress_reservations_dress_id_dresses_id_fk": {
+          "name": "dress_reservations_dress_id_dresses_id_fk",
+          "tableFrom": "dress_reservations",
+          "tableTo": "dresses",
+          "columnsFrom": [
+            "dress_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "dress_reservations_inventory_id_dress_inventory_id_fk": {
+          "name": "dress_reservations_inventory_id_dress_inventory_id_fk",
+          "tableFrom": "dress_reservations",
+          "tableTo": "dress_inventory",
+          "columnsFrom": [
+            "inventory_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.dresses": {
+      "name": "dresses",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "boutique_id": {
+          "name": "boutique_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "category": {
+          "name": "category",
+          "type": "dress_category",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'prom'"
+        },
+        "designer": {
+          "name": "designer",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "color": {
+          "name": "color",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "base_price": {
+          "name": "base_price",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image_urls": {
+          "name": "image_urls",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'[]'::jsonb"
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "dresses_boutique_id_idx": {
+          "name": "dresses_boutique_id_idx",
+          "columns": [
+            {
+              "expression": "boutique_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "dresses_category_idx": {
+          "name": "dresses_category_idx",
+          "columns": [
+            {
+              "expression": "category",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "dresses_is_active_idx": {
+          "name": "dresses_is_active_idx",
+          "columns": [
+            {
+              "expression": "is_active",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "dresses_boutique_id_boutiques_id_fk": {
+          "name": "dresses_boutique_id_boutiques_id_fk",
+          "tableFrom": "dresses",
+          "tableTo": "boutiques",
+          "columnsFrom": [
+            "boutique_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.inventory": {
+      "name": "inventory",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "variant_id": {
+          "name": "variant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "location_id": {
+          "name": "location_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "reserved_quantity": {
+          "name": "reserved_quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "reorder_point": {
+          "name": "reorder_point",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "inventory_variant_location_idx": {
+          "name": "inventory_variant_location_idx",
+          "columns": [
+            {
+              "expression": "variant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "location_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "inventory_tenant_id_idx": {
+          "name": "inventory_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "inventory_tenant_id_tenants_id_fk": {
+          "name": "inventory_tenant_id_tenants_id_fk",
+          "tableFrom": "inventory",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "inventory_variant_id_product_variants_id_fk": {
+          "name": "inventory_variant_id_product_variants_id_fk",
+          "tableFrom": "inventory",
+          "tableTo": "product_variants",
+          "columnsFrom": [
+            "variant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "inventory_location_id_locations_id_fk": {
+          "name": "inventory_location_id_locations_id_fk",
+          "tableFrom": "inventory",
+          "tableTo": "locations",
+          "columnsFrom": [
+            "location_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.locations": {
+      "name": "locations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address_line1": {
+          "name": "address_line1",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address_line2": {
+          "name": "address_line2",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "state": {
+          "name": "state",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "postal_code": {
+          "name": "postal_code",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "country": {
+          "name": "country",
+          "type": "varchar(2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'US'"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "numeric(10, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "numeric(11, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "locations_tenant_id_idx": {
+          "name": "locations_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "locations_tenant_id_tenants_id_fk": {
+          "name": "locations_tenant_id_tenants_id_fk",
+          "tableFrom": "locations",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.mobile_sync_queue": {
+      "name": "mobile_sync_queue",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "device_id": {
+          "name": "device_id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "table_name": {
+          "name": "table_name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "record_id": {
+          "name": "record_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "operation": {
+          "name": "operation",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "payload": {
+          "name": "payload",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_timestamp": {
+          "name": "client_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sync_status": {
+          "name": "sync_status",
+          "type": "sync_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "sync_error": {
+          "name": "sync_error",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sync_attempts": {
+          "name": "sync_attempts",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "synced_at": {
+          "name": "synced_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "mobile_sync_queue_tenant_id_idx": {
+          "name": "mobile_sync_queue_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "mobile_sync_queue_device_id_idx": {
+          "name": "mobile_sync_queue_device_id_idx",
+          "columns": [
+            {
+              "expression": "device_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "mobile_sync_queue_sync_status_idx": {
+          "name": "mobile_sync_queue_sync_status_idx",
+          "columns": [
+            {
+              "expression": "sync_status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "mobile_sync_queue_record_id_idx": {
+          "name": "mobile_sync_queue_record_id_idx",
+          "columns": [
+            {
+              "expression": "table_name",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "record_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "mobile_sync_queue_tenant_id_tenants_id_fk": {
+          "name": "mobile_sync_queue_tenant_id_tenants_id_fk",
+          "tableFrom": "mobile_sync_queue",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.order_line_items": {
+      "name": "order_line_items",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "order_id": {
+          "name": "order_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "variant_id": {
+          "name": "variant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "product_name": {
+          "name": "product_name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "variant_name": {
+          "name": "variant_name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sku": {
+          "name": "sku",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "unit_price": {
+          "name": "unit_price",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_price": {
+          "name": "total_price",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "order_line_items_order_id_idx": {
+          "name": "order_line_items_order_id_idx",
+          "columns": [
+            {
+              "expression": "order_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "order_line_items_tenant_id_idx": {
+          "name": "order_line_items_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "order_line_items_tenant_id_tenants_id_fk": {
+          "name": "order_line_items_tenant_id_tenants_id_fk",
+          "tableFrom": "order_line_items",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "order_line_items_order_id_orders_id_fk": {
+          "name": "order_line_items_order_id_orders_id_fk",
+          "tableFrom": "order_line_items",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "order_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "order_line_items_variant_id_product_variants_id_fk": {
+          "name": "order_line_items_variant_id_product_variants_id_fk",
+          "tableFrom": "order_line_items",
+          "tableTo": "product_variants",
+          "columnsFrom": [
+            "variant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.orders": {
+      "name": "orders",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "customer_id": {
+          "name": "customer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location_id": {
+          "name": "location_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "order_number": {
+          "name": "order_number",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "order_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "subtotal": {
+          "name": "subtotal",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tax_amount": {
+          "name": "tax_amount",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0'"
+        },
+        "discount_amount": {
+          "name": "discount_amount",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0'"
+        },
+        "shipping_amount": {
+          "name": "shipping_amount",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0'"
+        },
+        "total": {
+          "name": "total",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "currency": {
+          "name": "currency",
+          "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'USD'"
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "shipping_address": {
+          "name": "shipping_address",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "placed_at": {
+          "name": "placed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "orders_tenant_order_number_idx": {
+          "name": "orders_tenant_order_number_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "order_number",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "orders_tenant_id_idx": {
+          "name": "orders_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "orders_customer_id_idx": {
+          "name": "orders_customer_id_idx",
+          "columns": [
+            {
+              "expression": "customer_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "orders_status_idx": {
+          "name": "orders_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "orders_placed_at_idx": {
+          "name": "orders_placed_at_idx",
+          "columns": [
+            {
+              "expression": "placed_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "orders_tenant_id_tenants_id_fk": {
+          "name": "orders_tenant_id_tenants_id_fk",
+          "tableFrom": "orders",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "orders_customer_id_customers_id_fk": {
+          "name": "orders_customer_id_customers_id_fk",
+          "tableFrom": "orders",
+          "tableTo": "customers",
+          "columnsFrom": [
+            "customer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "orders_location_id_locations_id_fk": {
+          "name": "orders_location_id_locations_id_fk",
+          "tableFrom": "orders",
+          "tableTo": "locations",
+          "columnsFrom": [
+            "location_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.product_variants": {
+      "name": "product_variants",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "product_id": {
+          "name": "product_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sku": {
+          "name": "sku",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "barcode": {
+          "name": "barcode",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "price": {
+          "name": "price",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stock_quantity": {
+          "name": "stock_quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "options": {
+          "name": "options",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{}'::jsonb"
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_default": {
+          "name": "is_default",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "product_variants_tenant_product_idx": {
+          "name": "product_variants_tenant_product_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "product_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "product_variants_tenant_id_tenants_id_fk": {
+          "name": "product_variants_tenant_id_tenants_id_fk",
+          "tableFrom": "product_variants",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "product_variants_product_id_products_id_fk": {
+          "name": "product_variants_product_id_products_id_fk",
+          "tableFrom": "product_variants",
+          "tableTo": "products",
+          "columnsFrom": [
+            "product_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.products": {
+      "name": "products",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category_id": {
+          "name": "category_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "short_description": {
+          "name": "short_description",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "product_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'draft'"
+        },
+        "base_price": {
+          "name": "base_price",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "compare_price_at": {
+          "name": "compare_price_at",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cost_per_item": {
+          "name": "cost_per_item",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sku": {
+          "name": "sku",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "barcode": {
+          "name": "barcode",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "track_inventory": {
+          "name": "track_inventory",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "allow_backorder": {
+          "name": "allow_backorder",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "weight": {
+          "name": "weight",
+          "type": "numeric(8, 3)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_urls": {
+          "name": "image_urls",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'[]'::jsonb"
+        },
+        "tags": {
+          "name": "tags",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'[]'::jsonb"
+        },
+        "meta_title": {
+          "name": "meta_title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "meta_description": {
+          "name": "meta_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "products_tenant_slug_idx": {
+          "name": "products_tenant_slug_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "products_tenant_id_idx": {
+          "name": "products_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "products_category_id_idx": {
+          "name": "products_category_id_idx",
+          "columns": [
+            {
+              "expression": "category_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "products_status_idx": {
+          "name": "products_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "products_sku_idx": {
+          "name": "products_sku_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "sku",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "products_tenant_id_tenants_id_fk": {
+          "name": "products_tenant_id_tenants_id_fk",
+          "tableFrom": "products",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "products_category_id_categories_id_fk": {
+          "name": "products_category_id_categories_id_fk",
+          "tableFrom": "products",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.profiles": {
+      "name": "profiles",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "boutique_id": {
+          "name": "boutique_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(320)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone_number": {
+          "name": "phone_number",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "profiles_boutique_id_idx": {
+          "name": "profiles_boutique_id_idx",
+          "columns": [
+            {
+              "expression": "boutique_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "profiles_boutique_id_boutiques_id_fk": {
+          "name": "profiles_boutique_id_boutiques_id_fk",
+          "tableFrom": "profiles",
+          "tableTo": "boutiques",
+          "columnsFrom": [
+            "boutique_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.services": {
+      "name": "services",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "duration_minutes": {
+          "name": "duration_minutes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "services_tenant_id_idx": {
+          "name": "services_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "services_tenant_id_tenants_id_fk": {
+          "name": "services_tenant_id_tenants_id_fk",
+          "tableFrom": "services",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tenants": {
+      "name": "tenants",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subdomain": {
+          "name": "subdomain",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "custom_domain": {
+          "name": "custom_domain",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "tenant_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'onboarding'"
+        },
+        "logo_url": {
+          "name": "logo_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "primary_color": {
+          "name": "primary_color",
+          "type": "varchar(7)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "secondary_color": {
+          "name": "secondary_color",
+          "type": "varchar(7)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "theme_config": {
+          "name": "theme_config",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "max_locations": {
+          "name": "max_locations",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "tenants_slug_idx": {
+          "name": "tenants_slug_idx",
+          "columns": [
+            {
+              "expression": "slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "tenants_subdomain_idx": {
+          "name": "tenants_subdomain_idx",
+          "columns": [
+            {
+              "expression": "subdomain",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "tenants_custom_domain_idx": {
+          "name": "tenants_custom_domain_idx",
+          "columns": [
+            {
+              "expression": "custom_domain",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.user_profiles": {
+      "name": "user_profiles",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "user_role",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'customer'"
+        },
+        "display_name": {
+          "name": "display_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone_number": {
+          "name": "phone_number",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "preferences": {
+          "name": "preferences",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "version_timestamp": {
+          "name": "version_timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "user_profiles_tenant_id_idx": {
+          "name": "user_profiles_tenant_id_idx",
+          "columns": [
+            {
+              "expression": "tenant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "user_profiles_role_idx": {
+          "name": "user_profiles_role_idx",
+          "columns": [
+            {
+              "expression": "role",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "user_profiles_tenant_id_tenants_id_fk": {
+          "name": "user_profiles_tenant_id_tenants_id_fk",
+          "tableFrom": "user_profiles",
+          "tableTo": "tenants",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.booking_status": {
+      "name": "booking_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "confirmed",
+        "completed",
+        "no_show",
+        "cancelled"
+      ]
+    },
+    "public.boutique_staff_role": {
+      "name": "boutique_staff_role",
+      "schema": "public",
+      "values": [
+        "owner",
+        "manager",
+        "stylist",
+        "receptionist"
+      ]
+    },
+    "public.dress_category": {
+      "name": "dress_category",
+      "schema": "public",
+      "values": [
+        "prom",
+        "wedding",
+        "homecoming",
+        "quinceanera",
+        "formal",
+        "other"
+      ]
+    },
+    "public.inquiry_status": {
+      "name": "inquiry_status",
+      "schema": "public",
+      "values": [
+        "new",
+        "contacted",
+        "scheduled",
+        "closed"
+      ]
+    },
+    "public.order_status": {
+      "name": "order_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "confirmed",
+        "processing",
+        "shipped",
+        "delivered",
+        "cancelled",
+        "refunded"
+      ]
+    },
+    "public.product_status": {
+      "name": "product_status",
+      "schema": "public",
+      "values": [
+        "active",
+        "draft",
+        "archived"
+      ]
+    },
+    "public.reservation_status": {
+      "name": "reservation_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "confirmed",
+        "cancelled",
+        "expired"
+      ]
+    },
+    "public.sync_status": {
+      "name": "sync_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "synced",
+        "conflict",
+        "failed"
+      ]
+    },
+    "public.tenant_status": {
+      "name": "tenant_status",
+      "schema": "public",
+      "values": [
+        "active",
+        "suspended",
+        "onboarding",
+        "churned"
+      ]
+    },
+    "public.user_role": {
+      "name": "user_role",
+      "schema": "public",
+      "values": [
+        "super_admin",
+        "brand_admin",
+        "tenant_manager",
+        "tenant_staff",
+        "customer"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

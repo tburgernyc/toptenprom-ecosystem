@@ -1,0 +1,26 @@
+# Normalize all text files to LF in the repository,
+# and check out with CRLF on Windows.
+* text=auto eol=lf
+
+# Force these file types to always be LF even on Windows checkout
+*.ts   text eol=lf
+*.tsx  text eol=lf
+*.js   text eol=lf
+*.mjs  text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+*.css  text eol=lf
+*.sql  text eol=lf
+*.sh   text eol=lf
+
+# Binary files — no line-ending conversion
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.mp4  binary
+*.ico  binary
+*.db   binary

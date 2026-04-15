@@ -1,0 +1,118 @@
+/* ── Tailwind v4 ─────────────────────────────────────────────────────────── */
+@import "tailwindcss";
+
+/* ── Design system tokens ────────────────────────────────────────────────── */
+@import "@brand-network/ui-design-system/tokens.css";
+
+/* ── Scan design system source for Tailwind utility class usage ──────────── */
+@source "../../node_modules/@brand-network/ui-design-system/src";
+
+/* ── Base layer ─────────────────────────────────────────────────────────── */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-variant-numeric: tabular-nums;
+    color-scheme: light dark;
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-foreground);
+    font-family: var(--font-family-sans);
+    line-height: 1.6;
+    min-height: 100dvh;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* ── Dashboard-specific utilities ────────────────────────────────────────── */
+
+@layer utilities {
+  /* Bento grid card base */
+  .bento-card {
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    padding: 1.5rem;
+  }
+
+  /* Skeleton pulse animation */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-surface-overlay) 25%,
+      var(--color-border) 50%,
+      var(--color-surface-overlay) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+    border-radius: var(--radius-md);
+  }
+
+  @keyframes skeleton-pulse {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}

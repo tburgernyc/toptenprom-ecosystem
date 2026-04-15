@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "Top 10 Prom In-Store",
+    "slug": "toptenprom-instore",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.toptenprom.instore",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Used for virtual try-on features.",
+        "NSPhotoLibraryUsageDescription": "Used to select photos for virtual try-on."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.toptenprom.instore"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      [
+        "expo-secure-store",
+        {
+          "faceIDPermission": "Used to secure staff credentials."
+        }
+      ]
+    ],
+    "scheme": "toptenprom-instore",
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "REPLACE_WITH_EAS_PROJECT_ID"
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"C:/Users/tburg/Downloads/toptenprom-ecosystem-main/apps/brand-network-web/src\" -type f \\\\\\( -name \"*.tsx\" -o -name \"*.ts\" \\\\\\) ! -path \"*/node_modules/*\" ! -path \"*/.next/*\" ! -path \"*/dist/*\" -exec grep -l \"bg-\\\\|text-\\\\|border-\\\\|ring-\\\\|from-\\\\|to-\\\\|via-\\\\|placeholder-\\\\|divide-\" {} \\\\;)",
+      "Bash(find \"C:/Users/tburg/Downloads/toptenprom-ecosystem-main/apps/enterprise-dashboard/src\" -type f \\\\\\( -name \"*.tsx\" -o -name \"*.ts\" \\\\\\) ! -path \"*/node_modules/*\" ! -path \"*/.next/*\" ! -path \"*/dist/*\" -exec grep -l \"bg-\\\\|text-\\\\|border-\\\\|ring-\\\\|from-\\\\|to-\\\\|via-\\\\|placeholder-\\\\|divide-\" {} \\\\;)",
+      "Bash(grep -rn 'className=\"[^\"]*#[0-9a-fA-F]\\\\{3,6\\\\}[^\"]*\"' \"C:/Users/tburg/Downloads/toptenprom-ecosystem-main/apps/brand-network-web/src\" --include=\"*.tsx\" --include=\"*.ts\")",
+      "Bash(grep -rn 'className=\"[^\"]*#[0-9a-fA-F]\\\\{3,6\\\\}[^\"]*\"' \"C:/Users/tburg/Downloads/toptenprom-ecosystem-main/apps/enterprise-dashboard/src\" --include=\"*.tsx\" --include=\"*.ts\")",
+      "Bash(pnpm --filter @brand-network/web typecheck)",
+      "Bash(npm --version)",
+      "Read(//c/Users/tburg/AppData/Roaming/npm/**)",
+      "Bash(where.exe pnpm:*)",
+      "Bash(/c/Users/tburg/AppData/Local/pnpm/.tools/pnpm/9.15.4_tmp_1300_0/bin/pnpm --filter @brand-network/web typecheck)",
+      "Bash(/c/Users/tburg/AppData/Local/pnpm/.tools/pnpm/9.15.4_tmp_1300_0/bin/pnpm --filter @brand-network/web exec tsc --noEmit)",
+      "Bash(/c/Users/tburg/AppData/Local/pnpm/.tools/pnpm/9.15.4_tmp_1300_0/bin/pnpm config:*)",
+      "Bash(/c/Users/tburg/AppData/Local/pnpm/.tools/pnpm/9.15.4_tmp_1300_0/bin/pnpm install:*)",
+      "Bash(/c/Users/tburg/AppData/Local/pnpm/.tools/pnpm/9.15.4_tmp_1300_0/bin/pnpm --filter @brand-network/enterprise-dashboard typecheck)",
+      "Bash(/c/Users/tburg/AppData/Local/pnpm/.tools/pnpm/9.15.4_tmp_1300_0/bin/pnpm --filter @brand-network/web lint)",
+      "Bash(/c/Users/tburg/AppData/Local/pnpm/.tools/pnpm/9.15.4_tmp_1300_0/bin/pnpm --filter @brand-network/enterprise-dashboard lint)"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@brand-network/typescript-config",
+  "version": "0.0.1",
+  "private": true,
+  "license": "UNLICENSED",
+  "exports": {
+    "./base": "./base.json",
+    "./nextjs": "./nextjs.json",
+    "./react-library": "./react-library.json",
+    "./react-native": "./react-native.json"
+  }
+}

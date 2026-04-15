@@ -1,0 +1,14 @@
+{
+  "extends": "@brand-network/typescript-config/react-native",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "lib": ["ES2022", "dom"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "noEmit": true
+  },
+  "include": ["src", "app", "babel.config.js", "src/types"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,34 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+.next
+dist
+out
+build
+
+# Turbo cache
+.turbo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Drizzle
+drizzle/meta
+
+# WatermelonDB
+*.db
+*.db-journal

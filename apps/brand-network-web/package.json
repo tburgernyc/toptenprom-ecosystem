@@ -1,0 +1,44 @@
+{
+  "name": "@brand-network/web",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "build:prod": "NODE_ENV=production next build",
+    "analyze": "ANALYZE=true next build",
+    "start": "next start",
+    "start:prod": "NODE_ENV=production next start",
+    "lint": "eslint . --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "ci": "pnpm typecheck && pnpm lint && pnpm build"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^1.0.0",
+    "@brand-network/database": "workspace:*",
+    "@brand-network/ui-design-system": "workspace:*",
+    "@google/generative-ai": "^0.21.0",
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.49.4",
+    "@vis.gl/react-google-maps": "^1.5.2",
+    "ai": "^4.0.0",
+    "drizzle-orm": "^0.38.3",
+    "lucide-react": "^0.511.0",
+    "next": "16.2.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "server-only": "^0.0.1",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@brand-network/typescript-config": "workspace:*",
+    "@tailwindcss/postcss": "^4.1.4",
+    "@types/node": "^22",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.2",
+    "tailwindcss": "^4.1.4",
+    "typescript": "^5.7.3"
+  }
+}
