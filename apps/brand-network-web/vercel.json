@@ -36,19 +36,6 @@
     }
   ],
 
-  "rewrites": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "(?<subdomain>[^.]+)\\.toptenprom\\.com"
-        }
-      ],
-      "destination": "/_tenant/:subdomain/:path*"
-    }
-  ],
-
   "regions": ["iad1"],
 
   "crons": []

@@ -3,7 +3,7 @@ import { createServerClient } from "@supabase/ssr";
 import type { CookieOptions } from "@supabase/ssr";
 
 // ---------------------------------------------------------------------------
-// Root domain is set via NEXT_PUBLIC_ROOT_DOMAIN (e.g. "brand-network.com").
+// Root domain is set via NEXT_PUBLIC_ROOT_DOMAIN (e.g. "toptenprom.com").
 // For local dev use "localhost". Tenant subdomains: store1.localhost.
 // ---------------------------------------------------------------------------
 const ROOT_DOMAIN =
@@ -45,7 +45,7 @@ function extractSubdomain(hostname: string): string | null {
   return host;
 }
 
-export async function proxy(request: NextRequest): Promise<NextResponse> {
+export async function middleware(request: NextRequest): Promise<NextResponse> {
   const hostname = request.headers.get("host") ?? request.nextUrl.hostname;
   const subdomain = extractSubdomain(hostname);
   const { pathname } = request.nextUrl;
