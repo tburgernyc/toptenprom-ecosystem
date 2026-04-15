@@ -116,7 +116,7 @@ function WalkInIntakePanel({ locationManagerUserId: _id }: { locationManagerUser
         Add a walk-in customer to today&apos;s queue.
       </p>
       <a
-        href="/receptionist/walk-in"
+        href="/dashboard/receptionist/walk-in"
         className="flex w-full items-center justify-center gap-2 rounded-[var(--radius-md)] bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-text-inverse)] transition-colors hover:bg-[var(--color-primary-hover)]"
       >
         <svg

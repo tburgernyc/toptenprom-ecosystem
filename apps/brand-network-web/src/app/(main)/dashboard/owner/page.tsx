@@ -136,9 +136,9 @@ async function LocationMetricsTable({
 
 function QuickActionList() {
   const actions = [
-    { href: "/owner/prom-registry", label: "Prom Registry", desc: "Manage dress registrations" },
-    { href: "/manager", label: "Operations", desc: "Bookings & staff scheduling" },
-    { href: "/receptionist", label: "Front Desk", desc: "Walk-ins & check-ins" },
+    { href: "/dashboard/owner/prom-registry", label: "Prom Registry", desc: "Manage dress registrations" },
+    { href: "/dashboard/manager", label: "Operations", desc: "Bookings & staff scheduling" },
+    { href: "/dashboard/receptionist/walk-in", label: "Front Desk", desc: "Walk-ins & check-ins" },
   ];
 
   return (

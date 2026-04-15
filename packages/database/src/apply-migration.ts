@@ -40,7 +40,7 @@ async function main() {
     try {
       await sql.unsafe(stmt);
     } catch (err) {
-      const e = err as any;
+      const e = err as { message?: string; code?: string };
       // Skip "already exists" errors gracefully
       if (
         e?.message?.includes('already exists') ||

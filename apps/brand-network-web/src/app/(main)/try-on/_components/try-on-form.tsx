@@ -79,7 +79,7 @@ function ScanningOverlay() {
         className="absolute inset-0 rounded-[var(--radius-card)]"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 40%, rgba(242,75,154,0.22) 100%)",
+            "radial-gradient(ellipse at center, transparent 40%, var(--color-primary-glow) 100%)",
           animation: "pulseGlow 1.8s ease-in-out infinite alternate",
         }}
       />
@@ -147,7 +147,7 @@ function ResultsCard({
       {/* Success header */}
       <div
         className="glass-card flex items-start gap-4 p-5"
-        style={{ borderColor: "rgba(52,211,153,0.35)" }}
+        style={{ borderColor: "var(--color-success-glow)" }}
       >
         <CheckCircle2
           size={22}

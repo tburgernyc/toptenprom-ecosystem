@@ -261,7 +261,8 @@ const enhance = withObservables([], () => {
       .query(Q.where("sync_status", "conflict"))
       .observeCount(),
   };
-}) as any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}) as any; // withObservables HOC generic inference requires this cast
 
 const HomeScreen = enhance(HomeScreenInner);
 

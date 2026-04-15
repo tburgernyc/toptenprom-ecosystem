@@ -82,7 +82,7 @@ export function WalkInForm() {
             Log Another Walk-in
           </button>
           <a
-            href="/receptionist"
+            href="/dashboard/receptionist/walk-in"
             className="inline-flex h-9 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border-glow)] bg-[var(--color-bg)] px-5 text-sm font-medium text-[var(--color-text)] transition-colors hover:bg-[var(--color-bg-glass)]"
           >
             Back to Front Desk
@@ -236,7 +236,7 @@ export function WalkInForm() {
           )}
         </button>
         <a
-          href="/receptionist"
+          href="/dashboard/receptionist/walk-in"
           className="text-sm text-[var(--color-text-muted)] underline underline-offset-2 hover:no-underline"
         >
           Cancel
